@@ -1,101 +1,153 @@
-# ⏱️ Sistema de Picagem de Ponto - CESAE Digital
+# ⏱️ CESAE Digital – Attendance Management System
 
-Este projeto foi desenvolvido com **Laravel 12**, utilizando **MySQL (MariaDB)** como base de dados, **Breeze** para autenticação e **Blade** para renderização da interface. O principal objetivo é disponibilizar uma aplicação web para registo da picagem de ponto dos formandos dos cursos do CESAE Digital.
-
-O sistema está dividido por perfis de utilizador, cada um com funcionalidades distintas:
-- **Administrador:** Gestão total de cursos, turmas, módulos, formadores e formandos.
-- **Formador:** Disparo de PIN para picagem, visualização do cronograma, gestão de presenças e validação de justificações.
-- **Formando:** Picagem por PIN (manual e automática), acesso ao histórico de aulas, justificação de faltas, e consulta ao cronograma.
+A web-based Attendance Management System developed with Laravel 12, designed to manage student attendance, time tracking, and absence validation within CESAE Digital training programs. The system provides role-based access control and automates several administrative processes related to attendance management.
 
 ---
 
-## 🚀 Tecnologias Utilizadas
+## 🏗️ Architecture & Roles
 
-- **Laravel 12** – Framework moderno e robusto em PHP  
-- **MySQL (MariaDB)** – Sistema de gestão de bases de dados relacionais  
-- **Breeze** – Implementação simples de autenticação  
-- **Blade** – Motor de templates do Laravel  
-- **Tailwind CSS** – Framework de estilos moderno e responsivo  
-- **Bootstrap** – Componentes visuais prontos  
-- **PHP Pest** – Framework de testes elegante  
-- **JavaScript** – Funcionalidades interativas no frontend  
-- **FullCalendar** – Biblioteca de calendário interativo  
-- **ApexCharts** – Gráficos interativos e personalizáveis  
-- **Spatie Simple Excel** – Importação/exportação de ficheiros CSV/Excel  
-- **Git & GitHub** – Controlo de versão e colaboração
+The application is structured around three main user roles:
 
----
+### 👨‍💼 Administrator
+- Full management of courses, classes, modules, instructors, and students
+- System configuration and data control
 
-## 🎯 Funcionalidades
+### 👨‍🏫 Instructor
+- PIN generation for attendance check-in
+- Schedule (cronogram) visualization
+- Attendance management
+- Absence justification validation
 
-✔ Autenticação e registo para diferentes tipos de utilizadores  
-✔ Picagem de ponto com PIN, incluindo picagens tardias e check-out automático  
-✔ Gestão completa de cronogramas e presenças  
-✔ Submissão e validação de justificações (ex: atestados médicos)  
-✔ Exportação/importação de dados em CSV/Excel  
-✔ Integração com filas Laravel (`queue:work`) para automatização do check-out  
-✔ Base de dados com dados simulados (seeders) para testes
+### 👨‍🎓 Student
+- Attendance check-in via PIN (manual and automatic)
+- Class history access
+- Absence justification submission
+- Schedule consultation
 
 ---
 
+## 🚀 Tech Stack
+
+- **Laravel 12** – PHP framework  
+- **MySQL (MariaDB)** – Relational database  
+- **Laravel Breeze** – Authentication scaffolding  
+- **Blade** – Templating engine  
+- **Tailwind CSS & Bootstrap** – UI styling  
+- **JavaScript** – Interactive features  
+- **FullCalendar** – Interactive scheduling  
+- **ApexCharts** – Data visualization  
+- **Spatie Simple Excel** – CSV/Excel import/export  
+- **Laravel Queues** – Automated check-out processing  
+- **Pest PHP** – Testing framework  
+- **Git & GitHub** – Version control  
+
 ---
 
-## 🔐 Dados de Acesso para Testes
+## 🎯 Key Features
 
-> Utilizadores de exemplo criados pelo seeder (`php artisan db:seed`)
+✔ Role-based authentication system  
+✔ Attendance registration via PIN  
+✔ Automatic check-out system using Laravel Queues  
+✔ Attendance history tracking  
+✔ Absence submission and approval workflow  
+✔ CSV/Excel data import/export  
+✔ Seeder-based demo data  
+✔ Interactive calendar and reporting dashboards  
 
-### 👨‍💼 Administrador
-- Email: admin@example.com
-- Palavra-passe: password123  
+---
 
-### 👨‍🏫 Formador
-- Email: sara@example.com
-- Palavra-passe: password123  
+<br>
 
-### 👨‍🎓 Formando
-- Email: carmem.zavattieri.298335670@msft.cesae.pt
-- Palavra-passe: password123  
+## 🔐 Demo Credentials
 
-
-## 🔧 Instalação
-
-> **Importante:** Certifica-te que o teu ambiente local (ex: XAMPP) está ativo com MySQL em execução.
+After running:
 
 ```bash
-# Clonar o repositório
-git clone https://github.com/stellAlbuqrq/relogio-ponto-cesae.git
-cd relogio-ponto-cesae
+php artisan db:seed
+```
 
-# Instalar as dependências
+### Admin
+- Email: admin@example.com
+- Password: password123  
+
+### Instructor
+- Email: sara@example.com
+- Password: password123  
+
+### Student
+- Email: carmem.zavattieri.298335670@msft.cesae.pt
+- Password: password123  
+
+<br>
+
+## 🔧 Installation Guide
+
+> **Important:** Make sure your local environment (e.g., XAMPP, Laragon, etc.) is running and MySQL is active.
+
+### 1️⃣ Clone the repository
+
+```bash
+git clone https://github.com/CarmemZava/RelogioPonto.git
+cd RelogioPonto
+```
+
+### 2️⃣ Install dependencies
+
+```bash
 composer install
 npm install
+```
 
-# Copiar ficheiro de ambiente e configurar
+### 3️⃣ Environment configuration
+
+```bash
 cp .env.example .env
 php artisan key:generate
+```
 
-# Migrar base de dados
+Update your .env file with your database credentials before continuing.
+
+### 4️⃣ Database setup
+
+```bash
 php artisan migrate
-
-# Popular a base de dados com dados iniciais
 php artisan db:seed
+```
 
-# (Importante) Importar manualmente o ficheiro cronograma:
-# Usar o MySQL Workbench ou semelhante → Import Table Data
-# Ficheiro: Data/data_base_cronograma(Folha1).csv
+### 5️⃣ Import schedule data (Required)
+Manually import the following file into your database:
 
-# Atualizar autoload e bibliotecas
+```bash
+Data/data_base_cronograma(Folha1).csv
+```
+Use MySQL Workbench or any similar database management tool.
+
+### 6️⃣ Refresh autoload files
+
+```bash
 composer dump-autoload
-composer update
+```
 
-# Criar link para armazenar justificações
+### 7️⃣ Storage configuration
+
+```bash
 php artisan storage:link
+```
 
-# Instalar biblioteca de Excel (se ainda não estiver instalada)
+### 8️⃣ Install Excel library (if not already installed)
+
+```bash
 composer require spatie/simple-excel
+```
 
-# (Opcional) Gerar presenças fictícias
+### 9️⃣ (Optional) Generate additional demo attendance records
+
+```bash
 php artisan db:seed --class=PresencaSeeder
+```
 
-# (Opcional) Ativar fila para check-out automático
+### 🔟 (Optional) Run queue worker - Required for automatic check-out feature
+
+```bash
 php artisan queue:work
+```
